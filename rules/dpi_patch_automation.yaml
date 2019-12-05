@@ -10,7 +10,7 @@
             url: dpipatchingautomation
 
     action:
-        ref: "dpi_patch_automation.dpi_patch_automation_workflow"
+        ref: "dpi_automation_pack.dpi_patch_automation_workflow"
         description: "Runs series of actions to perform patching automation for the dpi stack"
         parameters:
             servername: "{{trigger.body.servername}}"
