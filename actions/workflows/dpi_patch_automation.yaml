@@ -1,0 +1,12 @@
+---
+version: 1.0
+description: A basic sequential workflow for the dpi patching automation.
+
+vars:
+
+tasks:
+
+output:
+  - messages:
+    
+

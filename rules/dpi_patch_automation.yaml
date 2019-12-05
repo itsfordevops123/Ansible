@@ -1,0 +1,15 @@
+---
+    name: "dpi_patch_automation"
+    pack: "dpi_automation_pack"
+    description: "Rule which triggeres the requested actions based on the met criteria."
+    enabled: true
+       
+    trigger:
+        type: "core.st2.CronTimer"
+        description: "Triggers whenever current time matches the specified time constaints like a UNIX cron scheduler."
+        parameters:
+            minute: 46
+
+    action:
+        ref: "dpi_patch_automation.dpi_patch_automation_workflow"
+        description: "Runs series of actions to perform patching automation for the dpi stack"

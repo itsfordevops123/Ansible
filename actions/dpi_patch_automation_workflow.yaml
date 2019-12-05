@@ -1,0 +1,7 @@
+---
+    name: dpi_patch_automation_workflow
+    pack: dpi_automation_apck
+    description: Run a chained workflow for automation pack generation and installation
+    runner_type: orquesta
+    entry_point: workflows/dpi_patch_automation_workflow.yaml
+    enabled: true
