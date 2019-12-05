@@ -1,0 +1,21 @@
+---
+    name: "linuxserverpatch"
+    pack: "dpi_automation_pack"
+    description: "Rule which triggeres the requested actions based on the met criteria."
+    enabled: true
+       
+    trigger:
+        type: "core.st2.CronTimer"
+        description: "Triggers whenever current time matches the specified time constaints like a UNIX cron scheduler."
+        parameters:
+            minute: 46
+
+    action:
+        ref: "ansible.playbook"
+        description: "Run ansible playbook"
+        parameters:
+            private_key: "/home/stanley/.ssh/automation_rsa"
+            inventory_file: "/opt/stackstorm/packs/dpi_automation_pack/artifacts/inventory.yaml"
+            debug: true
+            become: true
+            playbook: "/home/stanley/linuxpatch.yaml"

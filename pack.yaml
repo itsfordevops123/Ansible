@@ -1,0 +1,10 @@
+---
+ref: dpi_automation_pack
+name: dpi_automation_pack
+description: Automation pack containing sensors, rules and actions.
+keywords:
+    - 'automation'
+    - 'dpi'
+version: 0.0.1
+author: Starbucks
+email: SRE-Product@starbucks.com

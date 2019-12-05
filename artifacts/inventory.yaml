@@ -1,0 +1,12 @@
+all:
+  children:
+    dpi_testpatch:
+      hosts:
+          rh52499.starbucks.net:
+          rh52500.starbucks.net:
+      vars:
+        ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+        ansible_ssh_private_key_file: '/home/stanley/.ssh/automation_rsa'
+        ansible_ssh_user: automation
+        serial: "10%"
+        max_fail_percentage: 10
