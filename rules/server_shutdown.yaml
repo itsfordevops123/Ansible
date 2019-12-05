@@ -12,4 +12,4 @@
     action:
         ref: "dpi_automation_pack.server_shutdown"
         parameters:
-            servername: "{{trigger.body.servername}}"
+            hosts: "{{trigger.body.servername}}"
