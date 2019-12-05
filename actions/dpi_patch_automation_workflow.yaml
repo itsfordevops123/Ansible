@@ -5,3 +5,8 @@
     runner_type: orquesta
     entry_point: workflows/dpi_patch_automation_workflow.yaml
     enabled: true
+    parameters:
+        servername:
+            required: true
+            type: string
+  

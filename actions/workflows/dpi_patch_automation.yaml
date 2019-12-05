@@ -2,11 +2,34 @@
 version: 1.0
 description: A basic sequential workflow for the dpi patching automation.
 
-vars:
+input:
+  - servername
 
-tasks:
+vars:
+  - message: null
+  - result: null
 
 output:
-  - messages:
+  - result: <% ctx().message %>
+
+tasks:
+  servershutdown:
+    action: core.echo message="Automation started"
+    # input:
+    #   servername: [<% ctx().servername %>]
+    next:
+      - when: <% succeeded() %>
+        do: finish
+
+      - when: <% failed() %>
+        do: stop
+
+finish:
+    action: core.echo message="Automation completed."
+
+    stop:
+      action: core.echo message="Automation stopped."
+      next:
+        - do: fail
     
 
