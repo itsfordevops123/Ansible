@@ -1,0 +1,15 @@
+---
+    name: "server_shutdown"
+    pack: "dpi_automation_pack"
+    description: "Rule which triggeres the requested actions based on the met criteria."
+    enabled: true
+
+    trigger:
+        type: "core.st2.webhook"
+        parameters:
+            url: servershutdown
+
+    action:
+        ref: "dpi_automation_pack.server_shutdown"
+        parameters:
+            servername: "{{trigger.body.servername}}"
