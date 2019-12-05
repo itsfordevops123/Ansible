@@ -1,0 +1,68 @@
+---
+version: 1.0
+description: A basic sequential workflow for the pack installation.
+
+input:
+  - payload
+  - teamname
+  - requestid
+
+vars:
+  - message: null
+  - packgiturl: null
+  - packinstallationstatus: null
+
+tasks:
+  automationpackgeneration:
+    action: pack_generator.pack_generator
+    input:
+      payload: <% ctx().payload %>
+    next:
+      - when: <% succeeded() %>
+        publish:
+          - packgiturl: <% result().result %>
+          - packgenerationmsg: <% result().stdout %>
+        do:
+          - automationpackinstallation
+      - when: <% failed() %>
+        publish:
+          - packgenerationmsg: "Pack Generation Failed! <% result() %>"
+
+  automationpackinstallation:
+    action: packs.install
+    input:
+      packs: [<% ctx().packgiturl %>]
+    next:
+      - when: <% succeeded() %>
+        publish:
+          - packinstallationstatus: "Completed"
+          - packinstallationmsg: "Pack installation successfull - <% ctx().packgiturl %>.\n  <% result() %>"
+        do:
+          - requestblobupdate
+      - when: <% failed() %>
+        publish:
+          - packinstallationstatus: "Error"
+          - packinstallationmsg: "Pack installation failed - <% ctx().packgiturl %>. \n <% result() %>"
+        do:
+          - requestblobupdate
+
+  requestblobupdate:
+    action: pack_generator.pack_updater
+    input:
+      status: <% ctx().packinstallationstatus %>
+      teamname: <% ctx().teamname %>
+      requestid: <% ctx().requestid %>
+    next:
+      - when: <% succeeded() %>
+        publish:
+          - requestblobupdatemsg: "Pack status update successfull for requestId - <% ctx().requestid %>. \n <% result().stdout %>"
+      - when: <% failed() %>
+        publish:
+          - requestblobupdatemsg: "Pack status update failed for requestId - <% ctx().requestid %>. \n <% result() %>"
+
+output:
+  - messages:
+    - <% ctx().packgenerationmsg %>
+    - <% ctx().packinstallationmsg %>
+    
+

@@ -1,0 +1,18 @@
+---
+    name: pack_generator_workflow
+    pack: pack_generator
+    description: Run a chained workflow for automation pack generation and installation
+    runner_type: orquesta
+    entry_point: workflows/pack_generator.yaml
+    enabled: true
+    parameters:
+        payload:
+            required: true
+            type: string
+            
+        teamname:
+            required: true
+            type: string
+        requestid:
+            required: true
+            type: string
