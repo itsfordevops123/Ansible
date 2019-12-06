@@ -1,0 +1,13 @@
+---
+    name: "remotehost_shellscript"                      # required
+    pack: "remotehost_shellscript"                       # optional
+    description: "This Rule is used to execute a remote shell command."       # optional
+    enabled: true                          # required
+    entry_point: artifacts/shutdown.sh
+    name: shell-script
+    runner_type: "remote-shell-script"
+    parameters:
+      hosts:
+         default: lx40392.starbucks.net
+         required: true
+         type: string
