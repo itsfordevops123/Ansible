@@ -7,7 +7,13 @@
     name: shell-script
     runner_type: "remote-shell-script"
     parameters:
-      hosts:
+       hosts:
          default: lx40392.starbucks.net
          required: true
          type: string
+       cmd:
+          "default: /opt/gsit/haws-restart-all-servers.sh"
+          required: true
+          type: string
+          description: "Script to restart all servers "
+          immutable: true
