@@ -6,7 +6,7 @@
   tasks:
    - name: "Installing Nginx httpd service"
      yum: 
-       pkg: nginx
+       pkg: httpd
        state: present
        installroot: /opt/gsit
    - name: "Changing user and group permissions"
