@@ -2,13 +2,19 @@
 - hosts: appservers
   become: true
   become_method: sudo
-  become_user: appedt
+  become_user: root
   tasks:
    - name: "Installing httpd service"
      yum: 
        pkg: httpd
        state: present
        installroot: /opt/gsit
+   - name: "Changing user and group permissions"
+     file:
+       path: /opt/gsit
+       owner: appedt
+       group: appedt
+       mode: 0750       
    - name: Restarting httpd service
      service: 
        name: httpd
