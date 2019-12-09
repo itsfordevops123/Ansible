@@ -1,0 +1,15 @@
+---
+- hosts: groupA
+  become: true
+  become_method: sudo
+  become_user: appedt
+  tasks:
+    - name: Check running Process 
+      shell: "ps -eo user,args,pid |grep appedt"
+      ignore_errors: yes
+      changed_when: false
+      register: service_apache_status
+    - name: Report status of Process
+      fail:
+        msg: "no process are running"
+      when: ps -eo user,args,pid |grep appedt != 0
