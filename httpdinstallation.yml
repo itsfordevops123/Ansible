@@ -4,9 +4,9 @@
   become_method: sudo
   become_user: root
   tasks:
-   - name: "Installing httpd service"
+   - name: "Installing Nginx httpd service"
      yum: 
-       pkg: httpd
+       pkg: nginx
        state: present
        installroot: /opt/gsit
    - name: "Changing user and group permissions"
