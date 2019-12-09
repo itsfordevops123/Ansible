@@ -7,7 +7,6 @@
    - name: "Installing httpd service"
      yum: 
        pkg: httpd
-       enable: true
        state: present
        owner: appedt
        group: appedt
@@ -15,4 +14,5 @@
    - name: Restarting httpd service
      service: 
        name: httpd
+       status:enabled
        state: restarted
