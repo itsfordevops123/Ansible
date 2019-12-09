@@ -13,13 +13,13 @@
       mode: 0777
    - mail:  
      - name: File Copy Successful
-        mail:
-        host: smtp.gmail.com
-        port: 587
-        username: itsfordevops123@gmail.com
-        password: It$f0rdev0p$
-        to: hema.damacharla27@gmail.com
-        subject: Ansible file copy successful
-        body: 'Ansible {{ src }} has been suuccessfully copied'
+         mail:
+         host: smtp.gmail.com
+         port: 587
+         username: itsfordevops123@gmail.com
+         password: It$f0rdev0p$
+         to: hema.damacharla27@gmail.com
+         subject: Ansible file copy successful
+         body: 'Ansible {{ src }} has been suuccessfully copied'
        delegate_to: localhost   
     
