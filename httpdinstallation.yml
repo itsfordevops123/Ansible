@@ -8,9 +8,7 @@
      yum: 
        pkg: httpd
        state: present
-       owner: appedt
-       group: appedt
-       mode: 0750
+       installroot: /opt/gsit
    - name: Restarting httpd service
      service: 
        name: httpd
