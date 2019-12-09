@@ -1,15 +1,18 @@
 ---
-    name: "server_shutdown"
+    name: "remotehost_shellscript"
     pack: "dpi_automation_pack"
     description: "Rule which triggeres the requested actions based on the met criteria."
     enabled: true
-
-    trigger:
-        type: "core.st2.webhook"
-        parameters:
-            url: servershutdown
-
-    action:
-        ref: "dpi_automation_pack.server_shutdown"
-        parameters:
-            hosts: "{{trigger.body.servername}}"
+    name: shell-script
+    runner_type: "remote-shell-script"
+    parameters:
+       hosts:
+         default: lx40392.starbucks.net
+         required: true
+         type: string
+       cmd:
+          "default: /opt/gsit/haws-restart-all-servers.sh"
+          required: true
+          type: string
+          description: "Script to restart all servers "
+          immutable: true
