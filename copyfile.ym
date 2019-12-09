@@ -7,7 +7,7 @@
    - name: Copy a file 
      copy:
       src: /tmp/copyfile.txt
-      dest: /tmp
+      dest: /tmp/copyfile1.txt
       owner: appedt
       group: appedt
       mode: 0777
