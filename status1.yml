@@ -12,7 +12,6 @@
       become: true
       become_method: sudo
       become_user: appedt
-      fail:
-        msg: Services not running
-      when: '"ps -eo user,args,pid |grep appedt" !=0'
+    - name: Print shell command output
+      action: command echo "ps -eo user,args,pid |grep appedt"
       
