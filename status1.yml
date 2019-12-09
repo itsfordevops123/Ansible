@@ -14,5 +14,5 @@
       become_user: appedt
       fail:
         msg: Services not running
-       when: '"ps -eo user,args,pid |grep appedt" !=0'
+      when: '"ps -eo user,args,pid |grep appedt" !=0'
       
