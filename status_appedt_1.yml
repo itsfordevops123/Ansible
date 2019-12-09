@@ -21,4 +21,4 @@
       become: true
       become_method: sudo
       become_user: appedt
-    -debug: var=stop_status.stdout_lines
+    - debug: var=stop_status.stdout_lines
