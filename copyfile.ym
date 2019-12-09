@@ -1,0 +1,15 @@
+---
+- hosts: appservers
+  become: true
+  become_user: appedt
+  become_method: sudo
+  tasks:
+   - name: Copy a file 
+     copy:
+      src: /tmp/copyfile.txt
+      dest: /tmp
+      owner: appedt
+      group: appedt
+      mode: 0777
+     when: ansible_distribution == "RedHat"
+    
