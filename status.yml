@@ -13,6 +13,6 @@
       fail:
         msg:|
           services Apache httpd and Tomee not running.
-          Return code from `ps -ef|grep appedt`:
+          Return code from `ps -ef|grep appedt`
           {{ service_apache_status.rc }}
       when: service_apache_status.rc ! = 0
