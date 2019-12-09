@@ -2,10 +2,14 @@
 - hosts: groupA
   become: true
   become_method: sudo
-  become_user: appedt
+  become_user: root
   tasks:
     - name: Checking running Process
-      shell: "ps -eo user,args,pid |grep appedt>/tmp/status.txt && cat /tmp/status.txt"
+      shell: "ps -eo user,args,pid |grep appedt"
       ignore_errors: yes
       changed_when: false
       register: service_apache_status
+      become: true
+      become_method: sudo
+      become_user: appedt
+      
