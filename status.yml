@@ -1,5 +1,5 @@
 ---
-- hosts: sbservers
+- hosts: groupA
   become: true
   become_method: sudo
   become_user: appedt
