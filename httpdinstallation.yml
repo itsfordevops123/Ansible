@@ -4,16 +4,15 @@
   become_method: sudo
   become_user: appedt
   tasks:
-    - name: Installing httpd service
-      yum: 
+   - name: Installing httpd service
+     yum: 
        pkg: httpd
        enable: true
        state: present
        owner: appedt
        group: appedt
        mode: 0750
-       
-      service: 
+     service: 
        name: httpd
        state: started
        
