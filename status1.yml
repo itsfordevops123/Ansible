@@ -12,6 +12,6 @@
       become: true
       become_method: sudo
       become_user: appedt
-    - name: Print shell command output
-      action: command echo "ps -eo user,args,pid |grep appedt"
+      
+    - debug: var=service_apache_status.stdout_lines
       
