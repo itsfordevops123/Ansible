@@ -20,5 +20,5 @@
       become: true
       become_method: sudo
       become_user: appedt
-      failed_when: "'FAILED' in pawnee_stop_status.stderr
+      failed_when: "'FAILED' in pawnee_stop_status.stderr"
     - debug: var=pawnee_stop_status.stdout.lines
