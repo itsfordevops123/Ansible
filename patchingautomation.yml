@@ -14,7 +14,7 @@
       become_user: appedt
       failed_when: service_apache_status.rc!=0
       
-    - name: Stopping pawnee Apache Tomee Applications
+    - name: Stopping pawnee Tomee Applications
       when: '"ps -ef|grep pawnee|egrep start" > 0'
       shell: /opt/gsit/pawnee/apache-tomee-plus/bin/shutdown.sh
       register: pawnee_stop_status
@@ -25,7 +25,7 @@
         ansible_command_timeout: 7200
       #    - debug: var=pawnee_stop_status.stdout_lines  #this line will be used to display the output registered in "pawnee_stop_status"
       
-    - name: Stopping shawnee Apache Tomee Applications
+    - name: Stopping shawnee Tomee Applications
       when: '"ps -ef|grep shawnee|egrep start" > 0'
       shell: /opt/gsit/shawnee/apache-tomee-plus/bin/shutdown.sh
       register: shawnee_stop_status
@@ -37,7 +37,7 @@
     #- debug: var=shawnee_stop_status.stdout.lines
     
     
-    - name: Stopping sioux Apache Tomee Applications
+    - name: Stopping sioux Tomee Applications
       when: '"ps -ef|grep sioux|egrep start" > 0'
       shell: /opt/gsit/sioux/apache-tomee-plus/bin/shutdown.sh
       register: sioux_stop_status
@@ -82,16 +82,50 @@
     - name: Wait for the system to reboot 
       wait_for_connection:
         connect_timeout: 20
-        sleep: 7200 
         delay: 5
         timeout: 60
         
+    - name: Wait for 2 hours to start applications
+      pause: 
+      minutes: 120
+    
     - name: Starting Apache HTTPD
       shell: /opt/gsit/httpd/lbin/apache-start.sh
       register: apache-start_status
-      timeout: 300
       become: true
       become_method: sudo
       become_user: appedt
+      vars:
+        ansible_command_timeout: 300
       
-      
+    - name: Starting Pawnee Tomee Applications
+      shell: /opt/gsit/pawnee/apache-tomee-plus/bin/startup.sh
+      register: pawnee_start_status
+      become: true
+      become_method: sudo
+      become_user: appedt
+      vars:
+        ansible_command_timeout: 300
+        
+    - name: Starting Shawnee Tomee Applications
+      shell: /opt/gsit/shawnee/apache-tomee-plus/bin/startup.sh
+      register: Shawnee_start_status
+      become: true
+      become_method: sudo
+      become_user: appedt
+      vars:
+        ansible_command_timeout: 300
+        
+    - name: Starting Sioux Tomee Applications
+      shell: /opt/gsit/sioux/apache-tomee-plus/bin/startup.sh
+      register: Shawnee_start_status
+      become: true
+      become_method: sudo
+      become_user: appedt
+      vars:
+        ansible_command_timeout: 300
+        
+        
+        
+        
+        
