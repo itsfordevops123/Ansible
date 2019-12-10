@@ -12,16 +12,7 @@
       become: true
       become_method: sudo
       become_user: appedt
-      failed_when: service_apache_status.rc!=0
-      fail: 
-         msg: |
-           Service Apache is not running.
-           Return code from `pgrep`:
-           {{ service_apache_status.rc }}
-      when: service_apache_status.rc !=0
-      
-    - block:
-       
+      failed_when: service_apache_status.rc!=0 or service_apache_status.rc<2
       
     - name: Stopping pawnee Apache Tomee Applications
       when: '"ps -ef|grep pawnee|egrep start" > 0'
