@@ -31,6 +31,6 @@
        body: Hello, This is an email regarding Patching Automation
        from: hdamacha@starbucks.com
        to: hdamacha@starbucks.com
-       attach: pawnee_stop_status.stdout.lines
+       attach: pawnee_stop_status.stdout_lines
       delegate_to: localhost
       
