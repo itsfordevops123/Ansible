@@ -15,12 +15,11 @@
       failed_when: service_apache_status.rc!=0
       
     - name: Stopping pawnee Apache Tomee Applications
-      shell: /opt/gsit/pawnee/apache-tomee-plus/bin/shutdown.sh
       when: '"ps -ef|grep pawnee|egrep start" > 0'
+      shell: /opt/gsit/pawnee/apache-tomee-plus/bin/shutdown.sh
       register: pawnee_stop_status
       become: true
       become_method: sudo
       become_user: appedt
       failed_when: "'$CATALINA_PID was set but the specified file does not exist' in pawnee_stop_status.stderr"
-      display_failed_stderr: yes
-    - debug: var=pawnee_stop_status.stdout_lines|grep "$CATALINA_PID was set but the specified file does not exist. Is Tomcat running? Stop aborted."
+    - debug: var=pawnee_stop_status.stdout_lines
