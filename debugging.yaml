@@ -49,4 +49,15 @@
       become_user: appedt
     #- debug: var=apache_httpd_stop_status       
 
-    
+    - name: Apply security packages and updates on remote hosts
+      yum:
+        name: "*"
+        state: latest
+        
+    - name: Comparing last kernel and running kernel
+      shell: |
+        LAST_KERNEL=$(rpm -q --last kernel | perl -pe 's/^kernel-(\S+).*/$1/' | head -1)
+        CURRENT_KERNEL=$(uname -r)
+        
+       if [[ $LAST_KERNEL != $CURRENT_KERNEL ]]; then
+        shutdown -r now
