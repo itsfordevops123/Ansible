@@ -13,6 +13,14 @@
       become_method: sudo
       become_user: appedt
       failed_when: service_apache_status.rc!=0
+
+    - name: report status of running process
+      fail: 
+         msg: |
+           Service Apache is not running.
+           Return code from `pgrep`:
+           {{ service_apache_status.rc }}
+       when: service_apache_status.rc !=0
       
     - name: Stopping pawnee Apache Tomee Applications
       when: '"ps -ef|grep pawnee|egrep start" > 0'
@@ -21,5 +29,4 @@
       become: true
       become_method: sudo
       become_user: appedt
-      failed_when: "'$CATALINA_PID was set but the specified file does not exist' in pawnee_stop_status.stderr"
     - debug: var=pawnee_stop_status.stdout_lines
