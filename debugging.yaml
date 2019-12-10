@@ -3,7 +3,7 @@
   become: true
   become_method: sudo
   become_user: root
-  max_fail_percentage: 10  #Abort the playbook if failed percentage morethan specified
+  max_fail_percentage: 60  #Abort the playbook if failed percentage morethan specified
   tasks:
     - name: Checking running Process
       shell: ps -ef|grep appedt|egrep ['apache, httpd']
