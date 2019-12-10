@@ -18,6 +18,7 @@
       when: '"ps -ef|grep pawnee|egrep start" > 0'
       shell: /opt/gsit/pawnee/apache-tomee-plus/bin/shutdown.sh
       register: pawnee_stop_status
+      timeout: 1320
       become: true
       become_method: sudo
       become_user: appedt
@@ -27,6 +28,7 @@
       when: '"ps -ef|grep shawnee|egrep start" > 0'
       shell: /opt/gsit/shawnee/apache-tomee-plus/bin/shutdown.sh
       register: shawnee_stop_status
+      timeout: 1320
       become: true
       become_method: sudo
       become_user: appedt
@@ -35,6 +37,7 @@
       when: '"ps -ef|grep sioux|egrep start" > 0'
       shell: /opt/gsit/sioux/apache-tomee-plus/bin/shutdown.sh
       register: sioux_stop_status
+      timeout: 1320
       become: true
       become_method: sudo
       become_user: appedt
@@ -43,21 +46,29 @@
     - name: Stopping Apache Httpd 
       when: '"ps -ef|grep httpd|egrep start" > 0'
       shell: /opt/gsit/httpd/lbin/apache-stop.sh
+      timeout: 1320
       register: apache_httpd_stop_status
       become: true
       become_method: sudo
       become_user: appedt
     #- debug: var=apache_httpd_stop_status       
 
-    - name: Apply security packages and updates on remote hosts
+    - name: Apply security patches and updates on remote hosts
+      become: true
+      become_method: sudo
+      become_user: root
       yum:
         name: "*"
         state: latest
         
-    - name: Comparing last kernel and running kernel
+    - name: Comparing last Kernel and reboot if Kernel version changed
+      become: true
+      become_method: sudo
+      become_user: root
       shell: |
         LAST_KERNEL=$(rpm -q --last kernel | perl -pe 's/^kernel-(\S+).*/$1/' | head -1)
         CURRENT_KERNEL=$(uname -r)
         
         if [[ $LAST_KERNEL != $CURRENT_KERNEL ]]; then
         shutdown -r now
+      when: ansible_distribution== 'Red Hat Enterprise Linux' and ansible_major.release == '6'
