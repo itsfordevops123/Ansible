@@ -20,7 +20,7 @@
            Service Apache is not running.
            Return code from `pgrep`:
            {{ service_apache_status.rc }}
-      when: service_apache_status.rc =0
+      when: service_apache_status.rc !=0
       
     - name: Stopping pawnee Apache Tomee Applications
       when: '"ps -ef|grep pawnee|egrep start" > 0'
