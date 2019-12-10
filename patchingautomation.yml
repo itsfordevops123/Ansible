@@ -87,7 +87,7 @@
         
     - name: Wait for 2 hours to start applications
       pause: 
-      minutes: 120
+        minutes: 120
     
     - name: Starting Apache HTTPD
       shell: /opt/gsit/httpd/lbin/apache-start.sh
