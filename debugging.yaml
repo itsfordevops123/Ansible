@@ -21,6 +21,33 @@
       become: true
       become_method: sudo
       become_user: appedt
-      failed_when: pawnee_stop_status.rc = 1
-#    - debug: var=pawnee_stop_status.stdout_lines  #this line will be used to display the output registered in "pawnee_stop_status"
+      #    - debug: var=pawnee_stop_status.stdout_lines  #this line will be used to display the output registered in "pawnee_stop_status"
+
+    - name: Stopping shawnee Apache Tomee Applications
+      when: '"ps -ef|grep shawnee|egrep start" > 0'
+      shell: /opt/gsit/shawnee/apache-tomee-plus/bin/shutdown.sh
+      register: shawnee_stop_status
+      become: true
+      become_method: sudo
+      become_user: appedt
+    #- debug: var=shawnee_stop_status.stdout.lines
+
+    - name: Stopping sioux Apache Tomee Applications
+      when: '"ps -ef|grep sioux|egrep start" > 0'
+      shell: /opt/gsit/sioux/apache-tomee-plus/bin/shutdown.sh
+      register: sioux_stop_status
+      become: true
+      become_method: sudo
+      become_user: appedt
+    #- debug: var=sioux_stop_status.stdout.lines
+
+    - name: Stopping Apache Httpd 
+      when: '"ps -ef|grep httpd|egrep start" > 0'
+      shell: /opt/gsit/httpd/lbin/apache-stop.sh
+      register: apache_httpd_stop_status
+      become: true
+      become_method: sudo
+      become_user: appedt
+    #- debug: var=apache_httpd_stop_status       
+
     
