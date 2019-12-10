@@ -16,7 +16,7 @@
       
     - name: Stopping pawnee Apache Tomee Applications
       shell: /opt/gsit/pawnee/apache-tomee-plus/bin/shutdown.sh
-      only_if: ps -ef|grep pawnee|egrep start !=0
+      when: ps -ef|grep pawnee|egrep start !=0
       register: pawnee_stop_status
       become: true
       become_method: sudo
