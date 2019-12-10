@@ -1,0 +1,15 @@
+---
+- hosts: groupA
+  become: true
+  become_method: sudo
+  become_user: root
+  tasks:
+    - name: Checking running Process
+      shell: "ps -ef |grep appedt"
+      ignore_errors: yes
+      changed_when: false
+      register: service_apache_status
+      become: true
+      become_method: sudo
+      become_user: appedt
+      failed_when: "'org.apache.catalina.startup.Bootstrap' not in service_apache_status.stderr"
