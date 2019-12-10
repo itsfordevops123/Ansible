@@ -12,4 +12,4 @@
       become: true
       become_method: sudo
       become_user: appedt
-      failed_when: "'org.apache.catalina.startup.Bootstrap' not in service_apache_status.stderr"
+      failed_when: service_apache_status.rc!=0
