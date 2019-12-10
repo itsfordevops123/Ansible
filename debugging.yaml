@@ -21,6 +21,6 @@
       become: true
       become_method: sudo
       become_user: appedt
-      failed_when: "'FAILED' in pawnee_stop_status.stderr"
+      failed_when: "'$CATALINA_PID was set but the specified file does not exist' in pawnee_stop_status.stderr"
       display_failed_stderr: yes
     - debug: var=pawnee_stop_status.stdout_lines
