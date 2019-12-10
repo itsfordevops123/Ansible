@@ -1,0 +1,17 @@
+---
+- hosts: groupA
+  become: true
+  become_method: sudo
+  become_user: root
+  tasks:
+    - name: Checking running Process
+      shell: "ps -ef |grep appedt"
+      ignore_errors: yes
+      changed_when: false
+      register: service_apache_status
+      become: true
+      become_method: sudo
+      become_user: appedt
+      
+    - debug: var=service_apache_status.stdout_lines
+      
