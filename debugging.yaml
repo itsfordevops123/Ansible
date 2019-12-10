@@ -5,7 +5,7 @@
   become_user: root
   tasks:
     - name: Checking running Process
-      shell: "ps -ef|grep appedt|egrep httpd"
+      shell: "ps -ef|grep appedt|egrep ['apache, httpd']"
       ignore_errors: yes
       changed_when: false
       register: service_apache_status
@@ -13,3 +13,12 @@
       become_method: sudo
       become_user: appedt
       failed_when: service_apache_status.rc!=0
+      
+    - name: Stopping pawnee Apache Tomee Applications
+      shell: /opt/gsit/pawnee/apache-tomee-plus/bin/shutdown.sh
+      register: pawnee_stop_status
+      become: true
+      become_method: sudo
+      become_user: appedt
+      failed_when: "'FAILED' in pawnee_stop_status.stderr
+    - debug: var=pawnee_stop_status.stdout.lines
