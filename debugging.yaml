@@ -5,7 +5,7 @@
   become_user: root
   tasks:
     - name: Checking running Process
-      shell: "ps -ef |grep appedt"
+      shell: "ps -ef|grep appedt|egrep httpd"
       ignore_errors: yes
       changed_when: false
       register: service_apache_status
