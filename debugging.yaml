@@ -5,7 +5,7 @@
   become_user: root
   tasks:
     - name: Checking running Process
-      shell: "ps -ef|grep appedt|egrep ['apache, httpd']"
+      shell: ps -ef|grep appedt|egrep ['apache, httpd']
       ignore_errors: yes
       changed_when: false
       register: service_apache_status
@@ -13,14 +13,15 @@
       become_method: sudo
       become_user: appedt
       failed_when: service_apache_status.rc!=0
-
-    - name: report status of running process
       fail: 
          msg: |
            Service Apache is not running.
            Return code from `pgrep`:
            {{ service_apache_status.rc }}
       when: service_apache_status.rc !=0
+      
+    - block:
+       
       
     - name: Stopping pawnee Apache Tomee Applications
       when: '"ps -ef|grep pawnee|egrep start" > 0'
