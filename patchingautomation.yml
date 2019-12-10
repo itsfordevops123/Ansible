@@ -22,7 +22,7 @@
       become_method: sudo
       become_user: appedt
       vars:
-        ansible_command_timeout: 7200
+        ansible_command_timeout: 1320     #if the process not stopping wait for 22 min and will get tomeout.
       #    - debug: var=pawnee_stop_status.stdout_lines  #this line will be used to display the output registered in "pawnee_stop_status"
       
     - name: Stopping shawnee Tomee Applications
@@ -33,7 +33,7 @@
       become_method: sudo
       become_user: appedt
       vars:
-        ansible_command_timeout: 7200
+        ansible_command_timeout: 1320
     #- debug: var=shawnee_stop_status.stdout.lines
     
     
@@ -45,7 +45,7 @@
       become_method: sudo
       become_user: appedt
       vars:
-        ansible_command_timeout: 7200
+        ansible_command_timeout: 1320
     #- debug: var=sioux_stop_status.stdout.lines
 
     - name: Stopping Apache Httpd 
