@@ -23,15 +23,14 @@
       become_user: appedt
     - debug: var=pawnee_stop_status.stdout.find ("Tomcat stopped.")!=0
     
-    -name: Send and email when Applications are not running
-     mail:
-       host: 127.0.0.1
-       port: 25
-       subject: Ansible Report
-       body: Hello, This is an email regarding Patching Automation
-       from: hdamacha@starbucks.com
-       to: hdamacha@starbucks.com
-       attach: pawnee_stop_status.stdout.lines
-     delegate_to: localhost
-       -
+    - name: Send and email when Applications are not running
+        mail:
+        host: 127.0.0.1
+        port: 25
+        subject: Ansible Report
+        body: Hello, This is an email regarding Patching Automation
+        from: hdamacha@starbucks.com
+        to: hdamacha@starbucks.com
+        attach: pawnee_stop_status.stdout.lines
+      delegate_to: localhost       -
       
