@@ -23,4 +23,4 @@
       become_user: appedt
       failed_when: "'FAILED' in pawnee_stop_status.stderr"
       display_failed_stderr: yes
-    - debug: var=pawnee_stop_status.stdout.lines
+    - debug: var=pawnee_stop_status.stdout_lines
