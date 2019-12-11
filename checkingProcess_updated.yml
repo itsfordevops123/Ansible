@@ -22,33 +22,17 @@
       become_method: sudo
       become_user: appedt
       failed_when: service_apache_status.rc!=0
-    - debug: var="service_apache_status.stdout_lines + [service_apache_status.stderr]"   
-        - name: Starting Pawnee Tomee Applications
-      shell: /tmp/hema/pawnee/startup.sh
+    - debug: var="service_apache_status.stdout_lines + [service_apache_status.stderr]"  
+    
+    - name: Starting Pawnee Tomee Applications
+      shell: | /tmp/hema/pawnee/startup.sh
       register: pawnee_start_status
       become: true
       become_method: sudo
       become_user: appedt
       vars:
         ansible_command_timeout: 300        
-        
-    - name: Starting Shawnee Tomee Applications
-      shell: /tmp/hema/shawnee/startup.sh
-      register: pawnee_start_status
-      become: true
-      become_method: sudo
-      become_user: appedt
-      vars:
-        ansible_command_timeout: 300 
-        
-    - name: Starting Shawnee Tomee Applications
-      shell: /tmp/hema/shawnee/startup.sh
-      register: pawnee_start_status
-      become: true
-      become_method: sudo
-      become_user: appedt
-      vars:
-        ansible_command_timeout: 300
+
 
     - name: Checking running Process
       shell: |
