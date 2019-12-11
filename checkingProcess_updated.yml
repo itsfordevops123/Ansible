@@ -8,7 +8,7 @@
     - name: Checking running Process
       shell: |
         printf "\n"
-        ps -e -o user,pid,ppid,args |grep httpd|awk '{print $1,$2,$4}' &&  ps -e -o user,pid,ppid,args |grep java |awk '{print $1,$2, $5}'| egrep appedt
+        ps -e -o user,pid,ppid,args |grep httpd|awk '{print $1,$2,$4}' &&  ps -e -o user,pid,ppid,args |grep java |awk '{print $1,$2, $5}'| egrep '[httpd,java]'
         if [[ $? -eq 0 ]]                                                   #$? Register the output of most recent command
             then 
             printf "\n"
