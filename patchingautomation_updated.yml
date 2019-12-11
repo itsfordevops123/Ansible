@@ -9,12 +9,12 @@
       shell: |
         printf "\n"
         ps -e -o user,pid,ppid,args |grep appedt |egrep '[tomee,httpd]'
-        if [[ $? -eq 0 ]]
-        then 
+        if [[ $? -eq 0 ]]                                                   #$? Register the output of most recent command
+            then 
             printf "\n"
             printf "\t OK: Apache Httpd and Tomee applications are running...\n"
-        else
-        printf "\t  Error: No Process are running.. \n"
+            else
+            printf "\t  Error: No Process are running.. \n"
         fi
       changed_when: false
       register: service_apache_status     # Register the shell script command output
@@ -22,6 +22,7 @@
       become_method: sudo
       become_user: appedt
       failed_when: service_apache_status.rc!=0
+    - debug: var=service_apache_status.stdout_lines
       
     - name: Stopping pawnee Tomee Applications
       when: '"ps -ef|grep pawnee|egrep start" > 0'
