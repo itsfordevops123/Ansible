@@ -8,7 +8,7 @@
     - name: Checking running Process
       shell: |
         printf "\n"
-        ps -e -o user,pid,ppid,args |grep appedt |egrep '[tomee,httpd]'
+        ps -e -o user,pid,ppid,args |grep '[appedt, httpd]' |egrep '[tomee,httpd]' > /dev/null 2>1
         if [[ $? -eq 0 ]]                                                   #$? Register the output of most recent command
             then 
             printf "\n"
