@@ -100,7 +100,6 @@
       
     - name: Starting Pawnee Tomee Applications
       shell: /opt/gsit/pawnee/apache-tomee-plus/bin/startup.sh
-      poll: 0
       register: pawnee_start_status
       become: true
       become_method: sudo
@@ -110,7 +109,6 @@
         
     - name: Starting Shawnee Tomee Applications
       shell: /opt/gsit/shawnee/apache-tomee-plus/bin/startup.sh
-      poll: 0
       register: Shawnee_start_status
       become: true
       become_method: sudo
@@ -120,7 +118,6 @@
         
     - name: Starting Sioux Tomee Applications
       shell: /opt/gsit/sioux/apache-tomee-plus/bin/startup.sh
-      poll: 0
       register: Shawnee_start_status
       become: true
       become_method: sudo
