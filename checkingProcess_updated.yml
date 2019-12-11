@@ -25,7 +25,7 @@
     - debug: var="service_apache_status.stdout_lines + [service_apache_status.stderr]"  
     
     - name: Starting Pawnee Tomee Applications
-      shell: | /tmp/hema/pawnee/startup.sh
+      shell: /tmp/hema/pawnee/startup.sh
       register: pawnee_start_status
       become: true
       become_method: sudo
