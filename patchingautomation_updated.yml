@@ -6,7 +6,16 @@
   max_fail_percentage: 10  #Abort the playbook if failed percentage morethan specified
   tasks:
     - name: Checking running Process
-      shell: ps -ef|grep appedt|egrep ['apache, httpd']
+      shell: |
+        printf "\n"
+        ps -e -o user,pid,ppid,args |grep appedt |egrep '[tomee,httpd]'
+        if [[ $? -eq 0 ]]
+        then 
+            printf "\n"
+            printf "\t OK: Apache Httpd and Tomee applications are running...\n"
+        else
+        printf "\t  Error: No Process are running.. \n"
+        fi
       changed_when: false
       register: service_apache_status     # Register the shell script command output
       become: true
@@ -100,31 +109,15 @@
         ansible_command_timeout: 300
       
     - name: Starting Pawnee Tomee Applications
-      shell: /opt/gsit/pawnee/apache-tomee-plus/bin/startup.sh
+      shell: /tmp/hema/pawnee/startup.sh
       register: pawnee_start_status
       become: true
       become_method: sudo
       become_user: appedt
       vars:
-        ansible_command_timeout: 300
+        ansible_command_timeout: 300        
         
-    - name: Starting Shawnee Tomee Applications
-      shell: /opt/gsit/shawnee/apache-tomee-plus/bin/startup.sh
-      register: Shawnee_start_status
-      become: true
-      become_method: sudo
-      become_user: appedt
-      vars:
-        ansible_command_timeout: 300
-        
-    - name: Starting Sioux Tomee Applications
-      shell: /opt/gsit/sioux/apache-tomee-plus/bin/startup.sh
-      register: Shawnee_start_status
-      become: true
-      become_method: sudo
-      become_user: appedt
-      vars:
-        ansible_command_timeout: 300
+
         
         
         
