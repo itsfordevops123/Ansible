@@ -85,11 +85,17 @@
         LAST_KERNEL=$(rpm -q --last kernel | perl -pe 's/^kernel-(\S+).*/$1/' | head -1)
         CURRENT_KERNEL=$(uname -r)
         
-        if [[ $LAST_KERNEL != $CURRENT_KERNEL ]]; then
-        "sleep 5 && shutdown -r now"
+        if [[ $LAST_KERNEL != $CURRENT_KERNEL ]];
+            then
+            printf "\t Kernel version is diffrent, Rebooting the host \n"
+            "sleep 5 && shutdown -r now"
+            else
+            printf "\ Kernel  version is same so no reboot triggered"             
         fi
       when: ansible_distribution== 'Red Hat Enterprise Linux' and ansible_major.release == '6'
-      
+      register: reboot_status
+    - debug: var="reboot_status.stdout_lines + [service_apache_status.stderr]" 
+
     - name: Wait for the system to reboot 
       wait_for_connection:
         connect_timeout: 20
@@ -153,12 +159,5 @@
       become_method: sudo
       become_user: appedt
       failed_when: service_apache_status.rc!=0
-    - debug: var="service_apache_status.stdout_lines + [service_apache_status.stderr]"        
-
-        
-
-        
-        
-        
-        
-        
+    - debug: var="service_apache_status.stdout_lines + [service_apache_status.stderr]"
+    
