@@ -92,7 +92,6 @@
             else
             printf "\ Kernel  version is same so no reboot triggered"             
         fi
-      when: ansible_distribution== 'Red Hat Enterprise Linux' and ansible_major.release == '6'
       register: reboot_status
     - debug: var="reboot_status.stdout_lines + [service_apache_status.stderr]" 
 
@@ -115,33 +114,6 @@
       vars:
         ansible_command_timeout: 300
       
-    - name: Starting Pawnee Tomee Applications
-      shell: /tmp/hema/pawnee/startup.sh
-      ignore_errors: yes
-      register: pawnee_start_status
-      become: true
-      become_method: sudo
-      become_user: appedt
-      vars:
-        ansible_command_timeout: 300        
-        
-    - name: Starting Shawnee Tomee Applications
-      shell: /tmp/hema/shawnee/startup.sh
-      register: pawnee_start_status
-      become: true
-      become_method: sudo
-      become_user: appedt
-      vars:
-        ansible_command_timeout: 300 
-        
-    - name: Starting Shawnee Tomee Applications
-      shell: /tmp/hema/shawnee/startup.sh
-      register: pawnee_start_status
-      become: true
-      become_method: sudo
-      become_user: appedt
-      vars:
-        ansible_command_timeout: 300
 
     - name: Checking running Process
       shell: |
