@@ -117,6 +117,7 @@
       
     - name: Starting Pawnee Tomee Applications
       shell: /tmp/hema/pawnee/startup.sh
+      ignore_errors: yes
       register: pawnee_start_status
       become: true
       become_method: sudo
