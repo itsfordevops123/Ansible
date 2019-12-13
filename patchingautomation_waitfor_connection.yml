@@ -93,7 +93,6 @@
             printf "\ Kernel  version is same so no reboot triggered"             
         fi
       register: reboot_status
-      async: 1
       poll: 0
     - debug: var="reboot_status.stdout_lines + [service_apache_status.stderr]" 
 
