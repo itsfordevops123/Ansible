@@ -1,0 +1,140 @@
+---
+- hosts: groupA
+  become: true
+  become_method: sudo
+  become_user: root
+  max_fail_percentage: 10  #Abort the playbook if failed percentage morethan specified
+  tasks:
+    - name: Checking running Process
+      shell: |
+        printf "\n"
+        ps -e -o user,pid,ppid,args |grep httpd|awk '{print $1,$2,$4}' &&  ps -e -o user,pid,ppid,args |grep java |awk '{print $1,$2, $5}'| egrep '[httpd,java]'
+        if [[ $? -eq 0 ]]                                                   #$? Register the output of most recent command
+            then 
+            printf "\n"
+            printf "\t OK: Apache Httpd and Tomee applications are running...\n"
+            else
+            printf "\t  Error: No Process are running.. \n"
+        fi
+      changed_when: false
+      register: service_apache_status     # Register the shell script command output
+      become: true
+      become_method: sudo
+      become_user: appedt
+      failed_when: service_apache_status.rc!=0
+    - debug: var="service_apache_status.stdout_lines + [service_apache_status.stderr]"
+      
+    - name: Stopping pawnee Tomee Applications
+      when: '"ps -ef|grep pawnee|egrep start" > 0'
+      shell: /opt/gsit/pawnee/apache-tomee-plus/bin/shutdown.sh
+      register: pawnee_stop_status
+      become: true
+      become_method: sudo
+      become_user: appedt
+      vars:
+        ansible_command_timeout: 1320     #if the process not stopping wait for 22 min and will get tomeout.
+      #    - debug: var=pawnee_stop_status.stdout_lines  #this line will be used to display the output registered in "pawnee_stop_status"
+      
+    - name: Stopping shawnee Tomee Applications
+      when: '"ps -ef|grep shawnee|egrep start" > 0'
+      shell: /opt/gsit/shawnee/apache-tomee-plus/bin/shutdown.sh
+      register: shawnee_stop_status
+      become: true
+      become_method: sudo
+      become_user: appedt
+      vars:
+        ansible_command_timeout: 1320
+    #- debug: var=shawnee_stop_status.stdout.lines
+    
+    
+    - name: Stopping sioux Tomee Applications
+      when: '"ps -ef|grep sioux|egrep start" > 0'
+      shell: /opt/gsit/sioux/apache-tomee-plus/bin/shutdown.sh
+      register: sioux_stop_status
+      become: true
+      become_method: sudo
+      become_user: appedt
+      vars:
+        ansible_command_timeout: 1320
+    #- debug: var=sioux_stop_status.stdout.lines
+
+    - name: Stopping Apache Httpd 
+      when: '"ps -ef|grep httpd|egrep start" > 0'
+      shell: /opt/gsit/httpd/lbin/apache-stop.sh
+      register: apache_httpd_stop_status
+      become: true
+      become_method: sudo
+      become_user: appedt
+      vars:
+        ansible_command_timeout: 300
+    #- debug: var=apache_httpd_stop_status       
+
+    - name: Apply security patches and updates on remote hosts
+      become: true
+      become_method: sudo
+      become_user: root
+      yum:
+        name: "*"
+        state: latest
+        
+    - name: Comparing last Kernel and reboot if Kernel version changed
+      become: true
+      become_method: sudo
+      become_user: root
+      shell: |
+        LAST_KERNEL=$(rpm -q --last kernel | perl -pe 's/^kernel-(\S+).*/$1/' | head -1)
+        CURRENT_KERNEL=$(uname -r)
+        
+        if [[ $LAST_KERNEL != $CURRENT_KERNEL ]];
+            then
+            printf "\t Kernel version is diffrent, Rebooting the host \n"
+            "sleep 5 && reboot"
+            else
+            printf "\ Kernel  version is same so no reboot triggered"             
+        fi
+      register: reboot_status
+      async: 1
+      poll: 0
+    - debug: var="reboot_status.stdout_lines + [service_apache_status.stderr]" 
+
+    - name: Wait for the system to reboot 
+      wait_for_connection:
+        connect_timeout: 20     #Maximum number of seconds to wait for a connection to happen before closing and retrying
+        delay: 5                #Number of seconds to wait before starting to poll
+        sleep: 10               #Number of seconds to sleep between checks
+        host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
+        timeout: 600
+        
+    - name: Wait for 2 hours to start applications
+      pause: 
+        minutes: 120
+    
+    - name: Starting Apache HTTPD
+      shell: /opt/gsq"qqit/httpd/lbin/apache-start.sh
+      register: apache-start_status
+      become: true
+      become_method: sudo
+      become_user: appedt
+      vars:
+        ansible_command_timeout: 300
+      
+
+    - name: Checking running Process
+      shell: |
+        printf "\n"
+        ps -e -o user,pid,ppid,args |grep httpd|awk '{print $1,$2,$4}' &&  ps -e -o user,pid,ppid,args |grep java |awk '{print $1,$2, $5}'| egrep '[httpd,java]'
+        if [[ $? -eq 0 ]]                                                   #$? Register the output of most recent command
+            then 
+            printf "\n"
+            printf "\t OK: Apache Httpd and Tomee applications are running...\n"
+            else
+            printf "\t  Error: No Process are running.. \n"
+        fi
+      changed_when: false
+      register: service_apache_status     # Register the shell script command output
+      become: true
+      become_method: sudo
+      become_user: appedt
+      failed_when: service_apache_status.rc!=0
+    - debug: var="service_apache_status.stdout_lines + [service_apache_status.stderr]"
+    
