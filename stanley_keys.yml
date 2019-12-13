@@ -1,5 +1,5 @@
 ---
-- hosts: groupA
+- hosts: stanley
   become: true
   become_method: sudo
   become_user: root
