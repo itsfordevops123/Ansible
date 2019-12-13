@@ -14,13 +14,10 @@
       copy:
         src: /home/stanley/.ssh/authorized_keys
         dest: /home/stanley/.ssh/authorized_keys
-        become: true
-        mecome_method: sudo
-        become_user: stanley
-        remote_src: yes
         owner: stanley
         group: stanley
         backup: yes
+        backup_file: authorized_keys_bkp
 
          
          
