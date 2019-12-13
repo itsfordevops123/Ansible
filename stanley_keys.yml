@@ -10,6 +10,14 @@
         name: stanley
         home: /home/stanley
 
+    - name: creating .ssh directory
+      file:
+        path:  /home/stanley/.ssh/
+        state: directory
+        mode: '0755'
+        user: stanley
+        group: stanley
+
     - name: copying authorized keys 
       copy:
         src: /home/stanley/.ssh/authorized_keys
