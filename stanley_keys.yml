@@ -17,7 +17,7 @@
         become: true
         mecome_method: sudo
         become_user: stanley
-        remote_src: no
+        remote_src: yes
         owner: stanley
         group: stanley
         backup: yes
