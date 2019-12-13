@@ -1,0 +1,22 @@
+---
+- hosts: groupA
+  become: true
+  become_method: sudo
+  become_user: root
+  
+  tasks:
+    - name: create stanley user
+      user:
+        name: stanley
+        home: /home/stanley
+
+    -name: copying authorized keys 
+      copy:
+        src: /home/stanley/.ssh/authorized_keys
+        dest: /home/stanley/.ssh/authorized_keys
+        owner: stanley
+        group: stanley
+        backup: yes
+
+         
+         
