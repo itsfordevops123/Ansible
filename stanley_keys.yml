@@ -15,7 +15,7 @@
         path:  /home/stanley/.ssh/
         state: directory
         mode: '0755'
-        user: stanley
+        owner: stanley
         group: stanley
 
     - name: copying authorized keys 
@@ -24,8 +24,6 @@
         dest: /home/stanley/.ssh/authorized_keys
         owner: stanley
         group: stanley
-        backup: yes
-        backup_file: authorized_keys_bkp
 
          
          
