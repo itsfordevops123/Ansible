@@ -104,13 +104,9 @@
         sleep: 10               #Number of seconds to sleep between checks
         host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
         timeout: 600
-        
-    - name: Wait for 2 hours to start applications
-      pause: 
-        minutes: 120
-    
+
     - name: Starting Apache HTTPD
-      shell: /opt/gsq"qqit/httpd/lbin/apache-start.sh
+      shell: /opt/gsit/httpd/lbin/apache-start.sh
       register: apache-start_status
       become: true
       become_method: sudo
