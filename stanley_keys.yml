@@ -14,6 +14,9 @@
       copy:
         src: /home/stanley/.ssh/authorized_keys
         dest: /home/stanley/.ssh/authorized_keys
+        become: true
+        mecome_method: sudo
+        become_user: stanley
         remote_src: no
         owner: stanley
         group: stanley
