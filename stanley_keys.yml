@@ -10,7 +10,7 @@
         name: stanley
         home: /home/stanley
 
-    -name: copying authorized keys 
+    - name: copying authorized keys 
       copy:
         src: /home/stanley/.ssh/authorized_keys
         dest: /home/stanley/.ssh/authorized_keys
