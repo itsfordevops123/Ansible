@@ -22,6 +22,7 @@
       copy:
         src: "/home/stanley/.ssh/authorized_keys"
         dest: "/home/stanley/.ssh/authorized_keys"
+        sudo: yes
         owner: stanley
         group: stanley
         remote_src: no   # If no, it will search for src at originating/master machine.  If yes it will go to the remote/target machine for the src.
