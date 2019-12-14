@@ -9,12 +9,13 @@ do
     timeout 1300 $home/$i/tomee-bin/shutdown.sh
     if [[ $? -eq 0 ]]
         then
-        echo " Pawnee tomee application has stopped"
+        echo " $i Tomee application has stopped"
         exit 0
         else
-        echo "pawnee tomcat application errored"
+        echo "$i tomcat application errored"
         exit 1
     fi
+i=$i++
 done
 for i in d
 do
@@ -28,4 +29,3 @@ do
         exit 1
     fi
 done
-
