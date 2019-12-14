@@ -4,7 +4,7 @@ b="shawnee"
 c="sioux"
 d= "httpd"
 home=/opt/gsit
-for i in {$a..$c}
+for i in $a;$b;$c
 do
     timeout 1300 $home/$i/tomee-bin/shutdown.sh
     if [[ $? -eq 0 ]]
@@ -15,7 +15,7 @@ do
         echo "$i tomcat application errored"
         exit 1
     fi
-i=$i++
+#i=$i++
 done
 for i in d
 do
