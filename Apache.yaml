@@ -1,0 +1,20 @@
+---
+- hosts: webservers
+  become: true
+  become_method : sudo 
+  become_user: root
+  tasks: 
+    - name: Installing apache module
+      apt: 
+        name: apache2 
+        state: latest
+
+      service: 
+        name: apache2
+        state: restarted
+
+      
+      
+
+
+
