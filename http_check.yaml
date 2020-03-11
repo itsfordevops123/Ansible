@@ -1,0 +1,5 @@
+# Version 1.0
+file: 
+    log: true
+    status_file: "/var/tmp/stdout.log"
+    output_file: "/var/tmp/http_check.json"
