@@ -7,5 +7,9 @@
   tasks: 
     - name: copying files to /var/www/html
       copy:
-        src: /var/tmp/copy/*
+        src: /var/tmp/copy/{{ item }}
         dest: /var/www/html/
+        with_items: 
+          - index.html
+          - script.js
+          - http_check.yaml
