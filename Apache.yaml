@@ -5,7 +5,7 @@
   become_user: root
   tasks: 
     - name: Installing apache module
-      apt: 
+      yum: 
         name: apache2 
         state: latest
 
