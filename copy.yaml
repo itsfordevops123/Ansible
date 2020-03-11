@@ -6,5 +6,5 @@
 
 - name: copy files to /var/www/html
   copy:
-    src: /var/tmp/copy
-    dest: /var/www/html
+    src: /var/tmp/copy/*
+    dest: /var/www/html/
