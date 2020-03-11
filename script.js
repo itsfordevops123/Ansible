@@ -7,4 +7,7 @@ var jcontent = {
 }
 var output = document.getElementById('output');
 
-output.innerHTML = jcontent.Application;
+output.innerHTML = jcontent.Application + ''+ jcontent.Version;
+output.innerHTML = jcontent.Version;
+output.innerHTML = jcontent.Request_Count;
+
