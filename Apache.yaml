@@ -6,12 +6,12 @@
   tasks: 
     - name: Installing apache module
       yum: 
-        name: apache2 
+        name: httpd 
         state: latest
 
     - name: restarting service  
       service: 
-        name: apache2
+        name: httpd
         state: restarted
 
       
