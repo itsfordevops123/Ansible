@@ -3,9 +3,9 @@
   become: true
   become_user: root
   become_method: sudo
+  
   tasks: 
-
-- name: copying files to /var/www/html
-  copy:
-    src: /var/tmp/copy/*
-    dest: /var/www/html/
+    - name: copying files to /var/www/html
+      copy:
+        src: /var/tmp/copy/*
+        dest: /var/www/html/
